@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { ListSongs } from '../../components/ListSongs/ListSongs';
+import { Header } from "../../components/Header/Header";
 
 const url = new URL('https://69ed5ad4af4ff533142bb90c.mockapi.io/song');
 
@@ -24,7 +25,8 @@ export const Home = () => {
 
 
     return (
-        <div>
+        <div className="bg-[var(--color-bg)] text[var(--color-text)]">
+            <Header/>
             <ListSongs
                 list={songs}
             />

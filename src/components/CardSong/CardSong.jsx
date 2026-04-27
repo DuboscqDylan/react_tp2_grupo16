@@ -1,16 +1,29 @@
-
-
 export const CardSong = ({ song }) => {
     return (
-        <div className="bg-white rounded-2xl shadow-md p-5 hover:shadow-lg transition-shadow duration-300 border border-gray-100">
-            <h2 className="text-xl font-semibold text-gray-800 mb-2">{song.name}</h2>
-            <p className="text-sm text-gray-500 mb-1">{song.genre}</p>
-            <p className="text-sm text-gray-700 font-medium">{song.artist.name}</p>
+        <div
+            className="flex items-center gap-4 p-4  transition-all duration-300 cursor-pointer
+            bg-[var(--color-card)] text-[var(--color-text)] border border-[var(--color-border)]
+            hover:opacity-90"
+        >
             <img
                 src={song.cover}
                 alt={song.name}
-                className="w-full h-48 object-cover rounded-xl mb-3"
+                className="w-20 h-20 object-cover rounded-md flex-shrink-0"
             />
+
+            <div className="flex flex-col">
+                <h2 className="text-lg font-semibold">
+                    {song.name}
+                </h2>
+
+                <p className="text-sm opacity-70">
+                    {song.artist.name}
+                </p>
+
+                <p className="text-xs uppercase opacity-50">
+                    {song.genre}
+                </p>
+            </div>
         </div>
-    )
-}
+    );
+};
