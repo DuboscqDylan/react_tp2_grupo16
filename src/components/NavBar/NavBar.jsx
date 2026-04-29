@@ -2,9 +2,9 @@ import { NavItem } from "../NavItem/NavItem"
 
 export const NavBar = () => {
     const links = [
-        { to: "/", label: "Spoofify" },
-        { to: "/favorites", label: "Favoritos" },
-        { to: "/about", label: "Acerca de" },
+        { to: "/", label: "Spoofify", isLogo: true },
+        { to: "/Favourites", label: "Favoritos" },
+        { to: "/About", label: "Acerca de" },
     ];
 
     return (

@@ -5,11 +5,13 @@
     --color-text: #111827;
     --color-card: #f9fafb;
     --color-border: #e5e7eb;
+    --color-card-hover: rgba(0,0,0,0.05);
 }
 
 .dark {
-  --color-bg: #0f172a;
+  --color-bg: #121212;
   --color-text: #f1f5f9;
-  --color-card: #111827;
-  --color-border: #1f2937;
+  --color-card: #212121;
+  --color-border: rgba(179, 179, 179, 0.03);
+  --color-card-hover: rgba(179, 179, 179, 0.2);
 }
