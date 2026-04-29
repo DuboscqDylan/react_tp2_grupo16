@@ -6,6 +6,7 @@
     --color-card: #f9fafb;
     --color-border: #e5e7eb;
     --color-card-hover: rgba(0,0,0,0.05);
+    --color-accent: #1db954;
 }
 
 .dark {
@@ -14,4 +15,5 @@
   --color-card: #212121;
   --color-border: rgba(179, 179, 179, 0.03);
   --color-card-hover: rgba(179, 179, 179, 0.2);
+  --color-accent: #1db954;
 }
