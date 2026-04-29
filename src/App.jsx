@@ -3,13 +3,18 @@ import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import heroImg from './assets/hero.png'
 import './App.css'
-import { Home } from './pages/Home/Home';
+import { Outlet } from "react-router-dom";
+import { Header } from "./components/Header/Header";
+
 
 
 function App() {
 
   return (
-   <Home/>
+    <div  className="bg-[var(--color-bg)] text[var(--color-text)]">
+      <Header />
+      <Outlet />
+    </div>
   )
 }
 

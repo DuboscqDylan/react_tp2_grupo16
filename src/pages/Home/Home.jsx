@@ -25,8 +25,7 @@ export const Home = () => {
 
 
     return (
-        <div className="bg-[var(--color-bg)] text[var(--color-text)]">
-            <Header/>
+        <div>
             <ListSongs
                 list={songs}
             />
