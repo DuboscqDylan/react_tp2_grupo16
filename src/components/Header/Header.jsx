@@ -4,7 +4,9 @@ import { NavBar } from "../NavBar/NavBar";
 
 export const Header = () => {
 
-    const [darkMode, setDarkMode] = useState(false);
+    const [darkMode, setDarkMode] = useState(() => {
+        return localStorage.getItem("theme") === "dark";
+    });
 
     useEffect(() => {
         const root = document.documentElement;
@@ -17,12 +19,7 @@ export const Header = () => {
 
         localStorage.setItem("theme", darkMode ? "dark" : "light");
     }, [darkMode]);
-
-    useEffect(() => {
-        const saved = localStorage.getItem("theme");
-        if (saved === "dark") setDarkMode(true);
-    }, []);
-
+    
     return (
         <div>
             <header className="flex items-center justify-between p-4 border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text)]">

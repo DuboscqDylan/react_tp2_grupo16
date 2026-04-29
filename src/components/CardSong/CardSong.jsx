@@ -3,7 +3,7 @@ export const CardSong = ({ song }) => {
         <div
             className="flex items-center gap-4 p-4  transition-all duration-300 cursor-pointer
             bg-[var(--color-card)] text-[var(--color-text)] border border-[var(--color-border)]
-            hover:opacity-90"
+            hover:opacity-90 hover:bg-[var(--color-card-hover)] hover:scale-[1.02] hover:shadow-lg"
         >
             <img
                 src={song.cover}
