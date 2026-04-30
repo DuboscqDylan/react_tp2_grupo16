@@ -9,12 +9,13 @@ import { Header } from "./components/Header/Header";
 
 
 function App() {
+
   return (
-    <div className="bg-[var(--color-bg)] text-[var(--color-text)] min-h-screen">
+    <div  className="bg-[var(--color-bg)] text[var(--color-text)]">
       <Header />
       <Outlet />
     </div>
-  );
+  )
 }
 
 export default App

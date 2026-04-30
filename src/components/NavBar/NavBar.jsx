@@ -3,7 +3,7 @@ import { NavItem } from "../NavItem/NavItem"
 export const NavBar = () => {
     const links = [
         { to: "/", label: "Spoofify", isLogo: true },
-        { to: "/Favorites", label: "Favoritos" },
+        { to: "/Favourites", label: "Favoritos" },
         { to: "/About", label: "Acerca de" },
     ];
 

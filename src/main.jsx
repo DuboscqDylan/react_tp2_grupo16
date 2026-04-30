@@ -5,26 +5,32 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import "./index.css";
-import App from "./App";
-import { Favorites } from "./pages/Favorites/Favorites";
+import App from './App';
+import { Favourites } from "./pages/Favourites/Favourites";
 import { About } from "./pages/About/About";
 import { Home } from "./pages/Home/Home";
-import { FavoritesProvider } from "./contexts/FavoritesContext";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
     children: [
-      { index: true, element: <Home /> },
-      { path: "Favorites", element: <Favorites /> },
-      { path: "About", element: <About /> },
-    ],
-  },
+      {
+        index: true,
+        element: <Home/>,
+      },
+      {
+        path: "Favourites",
+        element: <Favourites />,
+      },
+      {
+        path: "About",
+        element: <About />,
+      }
+    ]
+  }
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <FavoritesProvider>
-    <RouterProvider router={router} />
-  </FavoritesProvider>
+  <RouterProvider router={router} />
 );
