@@ -22,12 +22,30 @@ export const Home = () => {
                 console.error(err);
             });
     }, []);
+    useEffect(() => {
+        fetch(url)
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error("Error en la request");
+                }
+                return res.json();
+            })
+            .then(data => {
+                setSongs(data);
+            })
+            .catch(err => {
+                console.error(err);
+            });
+    }, []);
 
-    return (
-        <div>
-            <ListSongs
-                list={songs}
-            />
-        </div>
-    )
-}
+
+  return (
+    <div>
+      <ListSongs
+        list={songs}
+        isFavorite={isFavorite}
+        onToggleFavorite={toggleFavorite}
+      />
+    </div>
+  );
+};
