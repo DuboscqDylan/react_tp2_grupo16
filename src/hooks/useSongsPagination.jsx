@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 
-const API_BASE = "https://69ed5ad4af4ff533142bb90c.mockapi.io/song";
+export const API_BASE = "https://69ed5ad4af4ff533142bb90c.mockapi.io/song";
 const PAGE_SIZE = 10;
 
 export function useSongsPagination() {

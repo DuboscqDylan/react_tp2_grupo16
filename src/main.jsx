@@ -10,6 +10,7 @@ import { Favorites } from "./pages/Favorites/Favorites";
 import { About } from "./pages/About/About";
 import { Home } from "./pages/Home/Home";
 import { FavoritesProvider } from "./contexts/FavoritesContext";
+import { Details } from "./pages/Details/Details";
 
 const router = createBrowserRouter([
   {
@@ -19,6 +20,7 @@ const router = createBrowserRouter([
       { index: true, element: <Home /> },
       { path: "Favorites", element: <Favorites /> },
       { path: "About", element: <About /> },
+      { path: "songs/:id", element: <Details />},
     ],
   },
 ]);
