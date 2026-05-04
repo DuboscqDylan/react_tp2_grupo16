@@ -5,6 +5,7 @@ import heroImg from './assets/hero.png'
 import './App.css'
 import { Outlet } from "react-router-dom";
 import { Header } from "./components/Header/Header";
+import { Footer } from './components/Footer/Footer';
 
 
 
@@ -15,6 +16,7 @@ function App() {
       <main className="pt-[80px]">
         <Outlet />
       </main>
+      <Footer />
     </div>
   );
 }
