@@ -12,7 +12,9 @@ function App() {
   return (
     <div className="bg-[var(--color-bg)] text-[var(--color-text)] min-h-screen">
       <Header />
-      <Outlet />
+      <main className="pt-[80px]">
+        <Outlet />
+      </main>
     </div>
   );
 }

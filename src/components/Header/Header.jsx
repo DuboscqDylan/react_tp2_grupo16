@@ -22,7 +22,7 @@ export const Header = () => {
 
     return (
         <div>
-            <header className="flex items-center justify-between px-7 py-6 border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text)]">
+            <header className="fixed top-0 left-0 w-full z-50 flex items-center justify-between px-7 py-6 border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-text)]">
                 <NavBar></NavBar>
                 <DarkModeToggle darkMode={darkMode} setDarkMode={setDarkMode}/>
             </header>
