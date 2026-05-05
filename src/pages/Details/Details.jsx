@@ -4,6 +4,7 @@ import { API_BASE } from "../../hooks/useSongsPagination";
 import { Star } from "lucide-react";
 import { useFavorites } from "../../contexts/FavoritesContext";
 import { FavoriteButton } from "../../components/Buttons/FavoriteButton";
+import { useTranslation } from "react-i18next";
 
 export const Details = () => {
     const { id } = useParams();
@@ -11,6 +12,7 @@ export const Details = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState();
     const { isFavorite, toggleFavorite } = useFavorites();
+    const { t } = useTranslation();
 
     useEffect(() => {
 
@@ -32,9 +34,9 @@ export const Details = () => {
 
     const isFav = isFavorite(song?.id);
 
-    if (loading) return <p className="p-5">Cargando...</p>
-    if (error) return <p className="p-5">{error}</p>
-    if (!song) return <p className="p-5">No se encontró la canción</p>
+    if (loading) return <p className="p-5">{t("loading")}</p>
+    if (error) return <p className="p-5">{t("error")}: {error}</p>
+    if (!song) return <p className="p-5">{t("songNotFound")}</p>
 
     return (
         <div className="p-6 flex justify-center bg-[var(--color-bg)] text-[var(--color-text)]">
@@ -54,28 +56,28 @@ export const Details = () => {
                             />
                         </div>
                         <p className="text-[var(--color-text-secondary)] capitalize">
-                            {song.artistId?.replace("-", " ") || "Unknown Artist"}
+                            {song.artistId?.replace("-", " ") || t("unknownArtist")}
                         </p>
                         </div>
                     </div>
                     <div className="space-y-2 text-sm">
                         <p>
-                            <span className="text-[var(--color-text-muted)]">Género: </span>{song.genre}
+                            <span className="text-[var(--color-text-muted)]">{t("genre")}: </span>{song.genre}
                         </p>
                         <p>
-                            <span className="text-[var(--color-text-muted)]">Álbum: </span>{song.album}
+                            <span className="text-[var(--color-text-muted)]">{t("album")}: </span>{song.album}
                         </p>
                         <p>
-                            <span className="text-[var(--color-text-muted)]">Fecha de lanzamiento: </span>{song.releaseDate}
+                            <span className="text-[var(--color-text-muted)]">{t("releaseDate")}: </span>{song.releaseDate}
                         </p>
                         <p className="flex items-center gap-1">
-                            <span className="text-[var(--color-text-muted)]">Rating: </span>{song.rating}<Star className="w-4 h-4 inline" />
+                            <span className="text-[var(--color-text-muted)]">{t("rating")}: </span>{song.rating}<Star className="w-4 h-4 inline" />
                         </p>
                         <p>
-                            <span className="text-[var(--color-text-muted)]">Duración: </span>{Math.floor(song.duration / 60)} : {(song.duration) % 60} min
+                            <span className="text-[var(--color-text-muted)]">{t("duration")}: </span>{Math.floor(song.duration / 60)} : {(song.duration) % 60} min
                         </p>
                         <p>
-                            <span className="text-[var(--color-text-muted)]">Reproducciones: </span>{song.plays}
+                            <span className="text-[var(--color-text-muted)]">{t("plays")}: </span>{song.plays}
                         </p>
                     </div>
                 </div>

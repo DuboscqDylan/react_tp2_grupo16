@@ -1,10 +1,12 @@
 import { NavItem } from "../NavItem/NavItem"
+import { useTranslation } from "react-i18next";
 
 export const NavBar = () => {
+    const { t } = useTranslation();
     const links = [
         { to: "/", label: "Spoofify", isLogo: true },
-        { to: "/Favorites", label: "Favoritos" },
-        { to: "/About", label: "Acerca de" },
+        { to: "/Favorites", label:  t("favorites") },
+        { to: "/About", label: t("about") },
     ];
 
     return (

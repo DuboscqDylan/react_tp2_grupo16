@@ -1,8 +1,12 @@
-export const SearchBar = ({search, setSearch}) => {
+import { useTranslation } from "react-i18next";
+
+export const SearchBar = ({ search, setSearch }) => {
+  const { t } = useTranslation(); 
+
     return (
         <input 
             type="text"
-            placeholder="¿Qué quieres reproducir?"
+            placeholder={t("search")}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className="w-full p-3 rounded-full transition

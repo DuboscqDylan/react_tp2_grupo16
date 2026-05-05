@@ -3,6 +3,7 @@ import { ListSongs } from "../../components/ListSongs/ListSongs";
 import { useFavorites } from "../../contexts/FavoritesContext";
 import { SearchBar } from "../../components/SearchBar/SearchBar";
 import { filterSongs } from "../../services/search";
+import { useTranslation } from "react-i18next";
 
 const url = new URL("https://69ed5ad4af4ff533142bb90c.mockapi.io/song");
 
@@ -10,6 +11,8 @@ export const Favorites = () => {
   const [allSongs, setAllSongs] = useState([]);
   const [search,setSearch] = useState("");
   const { favoriteIds, toggleFavorite, isFavorite } = useFavorites();
+
+  const { t } = useTranslation();
 
   useEffect(() => {
     fetch(url)
@@ -27,7 +30,7 @@ export const Favorites = () => {
   <div className="p-6">
 
     <h2 className="text-2xl font-semibold mb-4 text-[var(--color-text)]">
-      Tus favoritos ❤️
+      {t("yourfavorites")} ❤️
     </h2>
 
     {/*  Buscador */}
@@ -37,11 +40,11 @@ export const Favorites = () => {
      {filteredFavorites.length === 0 ? (
         search !== "" ? (
           <p className="text-gray-400 mt-4">
-            No se encontraron resultados para "{search}"
+            {t("noResults")} "{search}" 
           </p>
         ) : (
           <p className="text-gray-400 mt-4">
-            No tenés canciones favoritas
+            {t("noFavorites")}
           </p>
         )
       ) : (

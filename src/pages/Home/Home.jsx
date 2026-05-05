@@ -5,12 +5,14 @@ import { SearchBar } from "../../components/SearchBar/SearchBar";
 import { filterSongs } from "../../services/search";
 import { useSongsPagination } from "../../hooks/useSongsPagination";
 import { Sentinel } from "../../components/Sentinel/Sentinel";
+import { useTranslation } from "react-i18next";
 
 export const Home = () => {
   const { songs, loading, error, hasMore, loadMore } = useSongsPagination();
   const [search, setSearch] = useState("");
   const { toggleFavorite, isFavorite } = useFavorites();
-
+  const { t } = useTranslation();
+  
   const filteredSongs = filterSongs(songs, search);
 
   return (
@@ -19,7 +21,7 @@ export const Home = () => {
 
       {filteredSongs.length === 0 ? (
         <p className="text-gray-400 mt-4 text-center">
-          No se encontraron resultados
+           {t("noResults")}
         </p>
       ) : (
         <ListSongs
@@ -31,7 +33,7 @@ export const Home = () => {
 
       {loading && (
         <p className="text-center py-4 text-[var(--color-text-muted)]">
-          Cargando más canciones…
+          {t("loadingMore")}
         </p>
       )}
       {error && (
@@ -39,7 +41,7 @@ export const Home = () => {
       )}
       {!hasMore && songs.length > 0 && !loading && (
         <p className="text-center py-4 text-[var(--color-text-muted)]">
-          Has visto todas las canciones.
+          {t("noMoreSongs")}
         </p>
       )}
 

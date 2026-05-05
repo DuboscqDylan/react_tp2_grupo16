@@ -1,7 +1,9 @@
 import { ArrowUp } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 export const Footer = () => {
 
+    const { t } = useTranslation();
     const scrollTop = () => {
         window.scrollTo({ top: 0, behavior: "smooth" });
     };
@@ -67,7 +69,7 @@ export const Footer = () => {
                             target="_blank"
                             className="flex items-center justify-center gap-2 font-medium hover:text-[var(--color-text)] transition"
                         >
-                            Repositorio<svg
+                            {t("repository")}<svg
                                 role="img"
                                 viewBox="0 0 24 24"
                                 width="16"
@@ -84,7 +86,7 @@ export const Footer = () => {
                         className="flex items-center gap-2 px-4 py-2 rounded-md bg-[var(--color-card)] hover:bg-[var(--color-card-hover)] transition"
                     >
                         <ArrowUp size={16} />
-                        Arriba
+                        {t("scrollTop")}
                     </button>
 
                 </div>
