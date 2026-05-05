@@ -24,6 +24,15 @@ const resources = {
       plays: "Reproducciones",
       repository: "Repositorio",
       scrollTop: "Arriba",
+      aboutTitle: "Acerca de la aplicación",
+      aboutDescription: "Spoofify es una aplicación web que permite explorar canciones, descubrir nuevos artistas y gestionar favoritos.",
+      features: "Funcionalidades",
+      featureSearch: "Búsqueda dinámica de canciones",
+      featureFavorites: "Sistema de favoritos",
+      featureLanguage: "Soporte multi-idioma",
+      featureDarkMode: "Modo oscuro",
+      featureDetails: "Vista de detalles",
+      technologies: "Tecnologías utilizadas",
       error: "Error"
     }
   },
@@ -49,6 +58,16 @@ const resources = {
       plays: "Plays",
       repository: "Repository",
       scrollTop: "Top",
+      aboutTitle: "Acerca de la aplicación",
+      aboutTitle: "About the app",
+      aboutDescription: "Spoofify is a web app to explore songs, discover artists and manage favorites.",
+      features: "Features",
+      featureSearch: "Dynamic song search",
+      featureFavorites: "Favorites system",
+      featureLanguage: "Multi-language support",
+      featureDarkMode: "Dark mode",
+      featureDetails: "Details view",
+      technologies: "Technologies",
       error: "Error"
     }
   }
