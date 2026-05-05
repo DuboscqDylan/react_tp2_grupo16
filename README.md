@@ -1,16 +1,117 @@
-# React + Vite
+# 🎧 Spoofify
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicación web desarrollada con React que permite explorar canciones, buscar música, ver detalles y gestionar una lista de favoritos.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 📌 Descripción
 
-## React Compiler
+Spoofify es una SPA (Single Page Application) que simula un reproductor de música.  
+Permite a los usuarios descubrir canciones, filtrarlas dinámicamente y guardar sus favoritas.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+La aplicación consume datos desde una API simulada (MockAPI) y cuenta con múltiples páginas conectadas mediante React Router.
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🚀 Funcionalidades
+
+- 🔎 Búsqueda dinámica en tiempo real
+- ❤️ Sistema de favoritos con persistencia (LocalStorage)
+- 🌍 Multi-idioma (Español / Inglés)
+- 🌙 Modo oscuro
+- 📜 Scroll infinito (paginación)
+- 🎵 Página de detalles de canciones
+
+---
+
+## 🛠️ Tecnologías utilizadas
+
+- React
+- Tailwind CSS
+- React Router DOM
+- i18next (multi-idioma)
+- MockAPI (API simulada)
+
+---
+
+## 📂 Estructura del proyecto
+
+```bash
+    public/
+    ├── flags/
+    ├── favicon.svg
+    └── icons.svg
+    src/
+    ├── assets/
+    ├── components/
+    ├── contexts/
+    ├── hooks/
+    ├── pages/
+    ├── services/
+    ├── App.jsx
+    ├── i18n.js
+    └── main.jsx
+
+```
+---
+
+## ⚙️ Instalación y ejecución
+
+1. Clonar el repositorio:
+
+```bash
+    git clone https://github.com/DuboscqDylan/react_tp2_grupo16.git
+```
+
+2. Entrar al proyecto:
+
+```bash
+    cd react_tp2_grupo16
+```
+
+3. Instalar dependencias:
+   
+```bash
+    npm install
+#librería de iconos
+    npm install lucide-react
+#multi-idioma
+    npm install i18next react-i18next
+```
+
+4. Ejecutar el proyecto:
+```bash
+   npm run dev
+```
+
+## 🌐 API utilizada
+
+Se utilizó MockAPI para simular los datos:
+
+```bash
+    GET /song
+    GET /song/:id
+```
+
+## 👩‍💻 Integrantes
+    Cyntia Nasabun
+    Lucas Gabriel Cerda
+    Dylan Duboscq
+
+## 📋 Notas
+
+    Se utilizó LocalStorage para persistir favoritos y preferencias (idioma y tema).
+    Se implementó búsqueda avanzada con múltiples criterios.
+    La aplicación fue diseñada con enfoque responsive y experiencia de usuario.
+
+## 📎 Repositorio
+
+    👉 https://github.com/DuboscqDylan/react_tp2_grupo16
+
+## 📎 Linear
+
+    👉 [https://linear.app/pwa-cerda-duboscq/project/tp2-react-2e7cc94acbec/overview]
+
+## 📎 Vercel
+
+    👉 []
