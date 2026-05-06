@@ -74,6 +74,7 @@ La aplicación consume datos desde una API simulada (MockAPI) y cuenta con múlt
 ```bash
     npm install
 #librería de iconos
+    npm install react-router-dom
     npm install lucide-react
 #multi-idioma
     npm install i18next react-i18next
@@ -114,4 +115,4 @@ Se utilizó MockAPI para simular los datos:
 
 ## 📎 Vercel
 
-    👉 []
+    👉 [https://react-tp2-grupo16.vercel.app/]
