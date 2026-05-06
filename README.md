@@ -111,8 +111,8 @@ Se utilizó MockAPI para simular los datos:
 
 ## 📎 Linear
 
-    👉 [https://linear.app/pwa-cerda-duboscq/project/tp2-react-2e7cc94acbec/overview]
+    👉 https://linear.app/pwa-cerda-duboscq/project/tp2-react-2e7cc94acbec/overview
 
 ## 📎 Vercel
 
-    👉 [https://react-tp2-grupo16.vercel.app/]
+    👉 https://react-tp2-grupo16.vercel.app/
