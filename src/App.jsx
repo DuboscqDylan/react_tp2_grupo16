@@ -1,19 +1,12 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
 import { Outlet } from "react-router-dom";
 import { Header } from "./components/Header/Header";
-import { Footer } from './components/Footer/Footer';
-
-
+import { Footer } from "./components/Footer/Footer";
 
 function App() {
   return (
-    <div className="bg-[var(--color-bg)] text-[var(--color-text)] min-h-screen">
+    <div className="bg-[var(--color-bg)] text-[var(--color-text)] min-h-screen flex flex-col">
       <Header />
-      <main className="pt-[80px]">
+      <main className="pt-20 flex-1">
         <Outlet />
       </main>
       <Footer />

@@ -1,10 +1,6 @@
-import React from "react";
 import ReactDOM from "react-dom/client";
 import "./i18n";
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
 import App from "./App";
 import { Favorites } from "./pages/Favorites/Favorites";
@@ -21,7 +17,7 @@ const router = createBrowserRouter([
       { index: true, element: <Home /> },
       { path: "Favorites", element: <Favorites /> },
       { path: "About", element: <About /> },
-      { path: "songs/:id", element: <Details />},
+      { path: "songs/:id", element: <Details /> },
     ],
   },
 ]);
