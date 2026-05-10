@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect, useCallback, useMemo } from "react";
 
-const FavoritesContext = createContext();
+const FavoritesContext = createContext(null);
 
 export function FavoritesProvider({ children }) {
   const [favoriteIds, setFavoriteIds] = useState(() => {
@@ -11,6 +11,8 @@ export function FavoritesProvider({ children }) {
       return [];
     }
   });
+
+  const favoriteSet = useMemo(() => new Set(favoriteIds), [favoriteIds]);
 
   useEffect(() => {
     localStorage.setItem("favoriteIds", JSON.stringify(favoriteIds));
@@ -23,11 +25,9 @@ export function FavoritesProvider({ children }) {
   }, []);
 
   const isFavorite = useCallback(
-    (id) => favoriteIds.includes(id),
-    [favoriteIds]
+    (id) => favoriteSet.has(id),
+    [favoriteSet]
   );
-
-  const favoriteSet = useMemo(() => new Set(favoriteIds), [favoriteIds]);
 
   const value = useMemo(
     () => ({ favoriteIds, toggleFavorite, isFavorite, favoriteSet }),

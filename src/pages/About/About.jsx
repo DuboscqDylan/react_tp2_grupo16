@@ -7,7 +7,6 @@ export const About = () => {
   return (
     <div className="p-6 max-w-5xl mx-auto text-[var(--color-text)]">
 
-      {/* 🎧 Header */}
       <div className="mb-8">
         <h1 className="text-4xl font-bold mb-2">
           🎧 {t("SPOOFIFY")}
@@ -17,7 +16,6 @@ export const About = () => {
         </p>
       </div>
 
-      {/* ⚙️ Features */}
       <h2 className="text-2xl font-semibold mb-4">
         {t("features")}
       </h2>
@@ -51,7 +49,6 @@ export const About = () => {
 
       </div>
 
-      {/* 🧪 Technologies */}
       <h2 className="text-2xl font-semibold mt-10 mb-4">
         {t("technologies")}
       </h2>
@@ -66,10 +63,6 @@ export const About = () => {
           </span>
         ))}
       </div>
-
-      
-      
-
     </div>
   );
 };

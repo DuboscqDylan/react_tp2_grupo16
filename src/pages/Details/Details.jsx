@@ -5,7 +5,7 @@ import { Star } from "lucide-react";
 import { useFavorites } from "../../contexts/FavoritesContext";
 import { FavoriteButton } from "../../components/Buttons/FavoriteButton";
 import { useTranslation } from "react-i18next";
-import { LoadingState } from "../../components/LoadingState/LoadingState"
+import { LoadingState } from "../../components/LoadingState/LoadingState";
 import { ErrorState } from "../../components/ErrorState/ErrorState";
 import { EmptyState} from "../../components/EmptyState/EmptyState";
 
