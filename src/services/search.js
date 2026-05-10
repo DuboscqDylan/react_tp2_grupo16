@@ -1,13 +1,13 @@
 export const parseSearch = (query) => {
-    const regex = /"([^"]+)"|([^"\s|]+)/g;
-    const tokens = [];
-    let match;
+  const regex = /"([^"]+)"|([^"\s|]+)/g;
+  const tokens = [];
+  let match;
 
-    while ((match = regex.exec(query)) !== null) {
-        tokens.push ((match[1] || match[2]).toLowerCase());
-    }
+  while ((match = regex.exec(query)) !== null) {
+    tokens.push((match[1] || match[2]).toLowerCase());
+  }
 
-    return tokens;
+  return tokens;
 };
 
 export const filterSongs = (songs, query) => {
@@ -19,7 +19,6 @@ export const filterSongs = (songs, query) => {
             ${song.genre}
             ${song.artistId}
             `.toLowerCase();
-
     return tokens.every(token =>
       searchableText.includes(token)
     );
