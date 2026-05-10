@@ -4,48 +4,67 @@ import { useFavorites } from "../../contexts/FavoritesContext";
 import { SearchBar } from "../../components/SearchBar/SearchBar";
 import { filterSongs } from "../../services/search";
 import { useTranslation } from "react-i18next";
-
-const url = new URL("https://69ed5ad4af4ff533142bb90c.mockapi.io/song");
+import { fetchSongs } from "../../services/api";
+import { ErrorState } from "../../components/ErrorState/ErrorState";
+import { LoadingState } from "../../components/LoadingState/LoadingState";
+import { EmptyState } from "../../components/EmptyState/EmptyState";
+import { useMemo } from "react";
 
 export const Favorites = () => {
   const [allSongs, setAllSongs] = useState([]);
-  const [search,setSearch] = useState("");
+  const [search, setSearch] = useState("");
+  const [loading, setLoading] = useState(true);
   const { favoriteIds, toggleFavorite, isFavorite } = useFavorites();
+  const [error, setError] = useState(null);
 
   const { t } = useTranslation();
 
   useEffect(() => {
-    fetch(url)
-      .then((res) => res.json())
-      .then(setAllSongs)
-      .catch(console.error);
+    const getSongs = async () => {
+      try {
+        setError(null);
+        setLoading(true);
+        const data = await fetchSongs();
+        setAllSongs(data);
+      } catch (error) {
+        setError(error.message || t("error"));
+      } finally {
+        setLoading(false);
+      }
+    }
+    getSongs();
   }, []);
 
-  const favoriteSongs = allSongs.filter((song) => favoriteIds.includes(song.id));
+  const favoriteSongs = useMemo(() => {
+    return allSongs.filter((song) =>
+      favoriteIds.includes(song.id)
+    );
+  }, [allSongs, favoriteIds]);
 
-  //aplicar buscador
-  const filteredFavorites = filterSongs(favoriteSongs,search);
+  const filteredFavorites = useMemo(() => {
+    return filterSongs(
+      favoriteSongs,
+      search
+    );
+  }, [favoriteSongs, search]);
+
+  if (loading) return <LoadingState text={t("loading")} />
+  if (error) return <ErrorState text={error} />
 
   return (
-  <div className="p-6">
+    <div className="p-6">
 
-    <h2 className="text-2xl font-semibold mb-4 text-[var(--color-text)]">
-      {t("yourfavorites")} ❤️
-    </h2>
+      <h2 className="text-2xl font-semibold mb-4 text-[var(--color-text)]">
+        {t("yourfavorites")} ❤️
+      </h2>
 
-    {/*  Buscador */}
-    <SearchBar search={search} setSearch={setSearch} />
+      <SearchBar search={search} setSearch={setSearch} />
 
-    {/* Lista */}
-     {filteredFavorites.length === 0 ? (
+      {filteredFavorites.length === 0 ? (
         search !== "" ? (
-          <p className="text-gray-400 mt-4">
-            {t("noResults")} "{search}" 
-          </p>
+          <EmptyState text={t("noResults")} />
         ) : (
-          <p className="text-gray-400 mt-4">
-            {t("noFavorites")}
-          </p>
+          <EmptyState text={t("noFavorites")} />
         )
       ) : (
         <ListSongs

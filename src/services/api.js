@@ -5,3 +5,13 @@ export const fetchDetails = async (id) => {
         if (!res.ok) throw new Error("Error fetching song");
         return res.json();
 }
+
+export const fetchSongs = async () => {
+  const res = await fetch(API_BASE);
+
+  if (!res.ok) {
+    throw new Error("Error fetching songs");
+  }
+
+  return res.json();
+};
