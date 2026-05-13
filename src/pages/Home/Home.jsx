@@ -6,6 +6,9 @@ import { filterSongs } from "../../services/search";
 import { useSongsPagination } from "../../hooks/useSongsPagination";
 import { Sentinel } from "../../components/Sentinel/Sentinel";
 import { useTranslation } from "react-i18next";
+import { ErrorState } from "../../components/ErrorState/ErrorState";
+import { LoadingState } from "../../components/LoadingState/LoadingState";
+import { EmptyState } from "../../components/EmptyState/EmptyState";
 
 export const Home = () => {
 
@@ -16,6 +19,10 @@ export const Home = () => {
   const filteredSongs = useMemo(() => {
     return filterSongs(songs, search);
   }, [songs, search]);
+
+  if (error) {
+    return <ErrorState message={error} />;
+  }
 
   return (
     <div className="p-6">
@@ -34,17 +41,10 @@ export const Home = () => {
       )}
 
       {loading && (
-        <p className="text-center py-4 text-[var(--color-text-error)]">
-          {t("loadingMore")}
-        </p>
-      )}
-      {error && (
-        <p className="text-center py-4 text-[var(--color-text-error)]">Error: {error}</p>
+        <LoadingState text={t("loadingMore")} />
       )}
       {!hasMore && songs.length > 0 && !loading && (
-        <p className="text-center py-4 text-[var(--color-text-error)]">
-          {t("noMoreSongs")}
-        </p>
+        <EmptyState text={t("noMoreSongs")} />
       )}
 
       {search === "" && (
