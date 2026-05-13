@@ -13,10 +13,11 @@ export const FavoriteButton = ({ isFav, onToggle }) => {
     >
       <Heart
         size={20}
-        className={`transition-all hover:text-[var(--color-accent)] ${isFav
-          ? "fill-[var(--color-accent)] text-[var(--color-accent)]"
-          : "text-gray-400"
-          }`}
+        className={`transition-all hover:text-[var(--color-accent)] ${
+          isFav
+            ? "fill-[var(--color-accent)] text-[var(--color-accent)]"
+            : "text-gray-400"
+        }`}
       />
     </button>
   );

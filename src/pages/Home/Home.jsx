@@ -11,7 +11,6 @@ import { LoadingState } from "../../components/LoadingState/LoadingState";
 import { EmptyState } from "../../components/EmptyState/EmptyState";
 
 export const Home = () => {
-
   const { songs, loading, error, hasMore, loadMore } = useSongsPagination();
   const [search, setSearch] = useState("");
   const { toggleFavorite, isFavorite } = useFavorites();
@@ -29,9 +28,7 @@ export const Home = () => {
       <SearchBar search={search} setSearch={setSearch} />
 
       {filteredSongs.length === 0 ? (
-        <p className="text-gray-400 mt-4 text-center">
-          {t("noResults")}
-        </p>
+        <p className="text-gray-400 mt-4 text-center">{t("noResults")}</p>
       ) : (
         <ListSongs
           list={filteredSongs}
@@ -40,19 +37,13 @@ export const Home = () => {
         />
       )}
 
-      {loading && (
-        <LoadingState text={t("loadingMore")} />
-      )}
+      {loading && <LoadingState text={t("loadingMore")} />}
       {!hasMore && songs.length > 0 && !loading && (
         <EmptyState text={t("noMoreSongs")} />
       )}
 
       {search === "" && (
-        <Sentinel
-          onIntersect={loadMore}
-          loading={loading}
-          hasMore={hasMore}
-        />
+        <Sentinel onIntersect={loadMore} loading={loading} hasMore={hasMore} />
       )}
     </div>
   );

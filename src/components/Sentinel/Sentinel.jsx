@@ -12,7 +12,7 @@ export const Sentinel = ({ onIntersect, loading, hasMore }) => {
           onIntersect();
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0.1 },
     );
 
     const current = sentinelRef.current;
@@ -25,11 +25,5 @@ export const Sentinel = ({ onIntersect, loading, hasMore }) => {
 
   if (!hasMore) return null;
 
-  return (
-    <div
-      ref={sentinelRef}
-      className="h-4 w-full"
-      aria-hidden="true"
-    />
-  );
+  return <div ref={sentinelRef} className="h-4 w-full" aria-hidden="true" />;
 };

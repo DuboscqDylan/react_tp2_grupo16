@@ -14,7 +14,9 @@ export const LanguageSelector = () => {
       <img
         src={i18n.language === "es" ? "/flags/es.png" : "/flags/us.png"}
         alt="language"
-        title={i18n.language === "es" ? "Cambiar a inglés" : "Switch to Spanish"}
+        title={
+          i18n.language === "es" ? "Cambiar a inglés" : "Switch to Spanish"
+        }
         className="w-6 hover:scale-110 transition cursor-pointer"
       />
     </button>

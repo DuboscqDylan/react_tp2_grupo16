@@ -1,4 +1,11 @@
-import { createContext, useContext, useState, useEffect, useCallback, useMemo } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useCallback,
+  useMemo,
+} from "react";
 
 const FavoritesContext = createContext(null);
 
@@ -20,18 +27,15 @@ export function FavoritesProvider({ children }) {
 
   const toggleFavorite = useCallback((id) => {
     setFavoriteIds((prev) =>
-      prev.includes(id) ? prev.filter((favId) => favId !== id) : [...prev, id]
+      prev.includes(id) ? prev.filter((favId) => favId !== id) : [...prev, id],
     );
   }, []);
 
-  const isFavorite = useCallback(
-    (id) => favoriteSet.has(id),
-    [favoriteSet]
-  );
+  const isFavorite = useCallback((id) => favoriteSet.has(id), [favoriteSet]);
 
   const value = useMemo(
     () => ({ favoriteIds, toggleFavorite, isFavorite, favoriteSet }),
-    [favoriteIds, toggleFavorite, isFavorite, favoriteSet]
+    [favoriteIds, toggleFavorite, isFavorite, favoriteSet],
   );
 
   return (
@@ -43,6 +47,7 @@ export function FavoritesProvider({ children }) {
 
 export function useFavorites() {
   const ctx = useContext(FavoritesContext);
-  if (!ctx) throw new Error("useFavorites must be used inside FavoritesProvider");
+  if (!ctx)
+    throw new Error("useFavorites must be used inside FavoritesProvider");
   return ctx;
 }

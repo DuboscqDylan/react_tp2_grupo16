@@ -13,14 +13,11 @@ export const parseSearch = (query = "") => {
 export const filterSongs = (songs, query) => {
   const tokens = parseSearch(query);
 
-  return songs.filter(song => {
-    const searchableText = [
-      song.name,
-            song.genre,
-            song.artistId
-    ].filter(Boolean).join(" ").toLowerCase();
-    return tokens.every(token =>
-      searchableText.includes(token)
-    );
+  return songs.filter((song) => {
+    const searchableText = [song.name, song.genre, song.artistId]
+      .filter(Boolean)
+      .join(" ")
+      .toLowerCase();
+    return tokens.every((token) => searchableText.includes(token));
   });
 };
