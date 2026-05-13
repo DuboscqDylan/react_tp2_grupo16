@@ -1,18 +1,17 @@
 import { useState, useEffect, useCallback, useRef } from "react";
-
-export const API_BASE = "https://69ed5ad4af4ff533142bb90c.mockapi.io/song";
+import { API_BASE } from "../services/api.js";
 const PAGE_SIZE = 10;
 
 export function useSongsPagination() {
   const [songs, setSongs] = useState([]);
   const [page, setPage] = useState(1);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [hasMore, setHasMore] = useState(true);
   const [error, setError] = useState(null);
 
   const isFetchingRef = useRef(false);
 
-  const fetchSongs = useCallback(async (pageNum) => {
+  const fetchPage = useCallback(async (pageNum) => {
     if (isFetchingRef.current) return;
     isFetchingRef.current = true;
     setLoading(true);
@@ -20,8 +19,8 @@ export function useSongsPagination() {
 
     try {
       const url = new URL(API_BASE);
-      url.searchParams.append("page", pageNum);
-      url.searchParams.append("limit", PAGE_SIZE);
+      url.searchParams.set("page", pageNum);
+      url.searchParams.set("limit", PAGE_SIZE);
 
       const res = await fetch(url);
       if (!res.ok) throw new Error("Error fetching songs");
@@ -31,8 +30,7 @@ export function useSongsPagination() {
       setSongs((prev) => (pageNum === 1 ? data : [...prev, ...data]));
       setHasMore(data.length === PAGE_SIZE);
     } catch (err) {
-      console.error(err);
-      setError(err.message);
+      setError(err.message || t("error"));
     } finally {
       setLoading(false);
       isFetchingRef.current = false;
@@ -40,8 +38,8 @@ export function useSongsPagination() {
   }, []);
 
   useEffect(() => {
-    fetchSongs(page);
-  }, [page, fetchSongs]);
+    fetchPage(page);
+  }, [page, fetchPage]);
 
   const loadMore = useCallback(() => {
     if (!loading && hasMore) {
