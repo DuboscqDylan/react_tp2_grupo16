@@ -6,9 +6,7 @@ export const CardSong = ({ song, isFav, onToggle }) => {
   return (
     <NavLink to={`/songs/${song.id}`} className="block">
       <div className="flex items-stretch gap-4 bg-[var(--color-card)] rounded-lg p-3 shadow-sm hover:shadow-md hover:bg-[var(--color-card-hover)] transition-all w-full max-w-md cursor-pointer">
-
         <div className="flex items-stretch gap-4 min-w-0 flex-1">
-
           <div className="flex-shrink-0">
             <img
               src={song.cover}
@@ -22,7 +20,9 @@ export const CardSong = ({ song, isFav, onToggle }) => {
               {song.name}
             </h3>
             <p className="text-xs text-[var(--color-text-secondary)] truncate capitalize">
-              {song.artistId ? song.artistId.replaceAll("-", " ") : "Unknown Artist"}
+              {song.artistId
+                ? song.artistId.replaceAll("-", " ")
+                : "Unknown Artist"}
             </p>
             <p className="text-xs text-[var(--color-text-muted)]">
               {song.genre}

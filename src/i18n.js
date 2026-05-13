@@ -25,7 +25,8 @@ const resources = {
       repository: "Repositorio",
       scrollTop: "Arriba",
       aboutTitle: "Acerca de la aplicación",
-      aboutDescription: "Spoofify es una aplicación web que permite explorar canciones, descubrir nuevos artistas y gestionar favoritos.",
+      aboutDescription:
+        "Spoofify es una aplicación web que permite explorar canciones, descubrir nuevos artistas y gestionar favoritos.",
       features: "Funcionalidades",
       featureSearch: "Búsqueda dinámica de canciones",
       featureFavorites: "Sistema de favoritos",
@@ -33,8 +34,8 @@ const resources = {
       featureDarkMode: "Modo oscuro",
       featureDetails: "Vista de detalles",
       technologies: "Tecnologías utilizadas",
-      error: "Error"
-    }
+      error: "Error",
+    },
   },
   en: {
     translation: {
@@ -60,7 +61,8 @@ const resources = {
       scrollTop: "Top",
       aboutTitle: "Acerca de la aplicación",
       aboutTitle: "About the app",
-      aboutDescription: "Spoofify is a web app to explore songs, discover artists and manage favorites.",
+      aboutDescription:
+        "Spoofify is a web app to explore songs, discover artists and manage favorites.",
       features: "Features",
       featureSearch: "Dynamic song search",
       featureFavorites: "Favorites system",
@@ -68,22 +70,20 @@ const resources = {
       featureDarkMode: "Dark mode",
       featureDetails: "Details view",
       technologies: "Technologies",
-      error: "Error"
-    }
-  }
+      error: "Error",
+    },
+  },
 };
 
 const savedLang = localStorage.getItem("lang") || "es";
 
-i18n
-  .use(initReactI18next)
-  .init({
-    resources,
-    lng: savedLang,
-    fallbackLng: "es",
-    interpolation: {
-      escapeValue: false
-    }
-  });
+i18n.use(initReactI18next).init({
+  resources,
+  lng: savedLang,
+  fallbackLng: "es",
+  interpolation: {
+    escapeValue: false,
+  },
+});
 
 export default i18n;

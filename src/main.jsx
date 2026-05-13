@@ -25,5 +25,5 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root")).render(
   <FavoritesProvider>
     <RouterProvider router={router} />
-  </FavoritesProvider>
+  </FavoritesProvider>,
 );

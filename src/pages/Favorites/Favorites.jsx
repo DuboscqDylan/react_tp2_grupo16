@@ -31,29 +31,23 @@ export const Favorites = () => {
       } finally {
         setLoading(false);
       }
-    }
+    };
     getSongs();
   }, []);
 
   const favoriteSongs = useMemo(() => {
-    return allSongs.filter((song) =>
-      favoriteIds.includes(song.id)
-    );
+    return allSongs.filter((song) => favoriteIds.includes(song.id));
   }, [allSongs, favoriteIds]);
 
   const filteredFavorites = useMemo(() => {
-    return filterSongs(
-      favoriteSongs,
-      search
-    );
+    return filterSongs(favoriteSongs, search);
   }, [favoriteSongs, search]);
 
-  if (loading) return <LoadingState text={t("loading")} />
-  if (error) return <ErrorState text={error} />
+  if (loading) return <LoadingState text={t("loading")} />;
+  if (error) return <ErrorState text={error} />;
 
   return (
     <div className="p-6">
-
       <h2 className="text-2xl font-semibold mb-4 text-[var(--color-text)]">
         {t("yourfavorites")} ❤️
       </h2>

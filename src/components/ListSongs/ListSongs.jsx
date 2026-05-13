@@ -6,9 +6,11 @@ export const ListSongs = ({ list, isFavorite, onToggleFavorite }) => {
   const { t } = useTranslation();
 
   if (list.length === 0) {
-    return <>
-      return <EmptyState text={t("emptyList")} />;
-    </>
+    return (
+      <>
+        return <EmptyState text={t("emptyList")} />;
+      </>
+    );
   }
 
   return (
