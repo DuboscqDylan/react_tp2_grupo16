@@ -1,6 +1,6 @@
 import { Plus } from "lucide-react";
 
-export const AddToPlaylistButton = () => {
+export const AddToPlaylistButton = ({ onToggle }) => {
   return (
     <button
       onClick={(e) => {

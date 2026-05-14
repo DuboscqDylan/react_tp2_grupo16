@@ -1,6 +1,6 @@
 import { FavoriteButton } from "../Buttons/FavoriteButton";
 import { AddToPlaylistButton } from "../Buttons/AddToPlaylistButton";
-import { NavLink } from "react-router";
+import { NavLink } from "react-router-dom";
 
 export const CardSong = ({ song, isFav, onToggle }) => {
   return (
