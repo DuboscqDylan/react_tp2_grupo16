@@ -14,7 +14,7 @@ beforeEach(() => {
   disconnectMock = vi.fn();
   intersectionCallback = null;
 
-  window.IntersectionObserver = vi.fn((callback, options) => {
+  window.IntersectionObserver = vi.fn(function (callback, _options) {
     intersectionCallback = callback;
     return {
       observe: observeMock,
@@ -22,6 +22,15 @@ beforeEach(() => {
       disconnect: disconnectMock,
     };
   });
+});
+
+window.IntersectionObserver = vi.fn(function(callback, options) {
+  intersectionCallback = callback;
+  return {
+    observe: observeMock,
+    unobserve: unobserveMock,
+    disconnect: disconnectMock,
+  };
 });
 
 const triggerIntersection = () => {
@@ -41,13 +50,17 @@ describe('Sentinel', () => {
     expect(container.firstChild).toBeNull();
   });
 
-  it('renders a hidden div when hasMore is true', () => {
-    render(<Sentinel onIntersect={vi.fn()} loading={false} hasMore={true} />);
-    const sentinel = screen.getByRole('none'); 
-    expect(sentinel).toBeInTheDocument();
-    expect(sentinel).toHaveClass('h-4', 'w-full');
-    expect(sentinel).toHaveAttribute('aria-hidden', 'true');
-  });
+it('renders a hidden div when hasMore is true', () => {
+  const { container } = render(
+    <Sentinel onIntersect={vi.fn()} loading={false} hasMore={true} />
+  );
+
+  const sentinel = container.querySelector('.h-4.w-full');
+
+  expect(sentinel).toBeInTheDocument();
+  expect(sentinel).toHaveClass('h-4', 'w-full');
+  expect(sentinel).toHaveAttribute('aria-hidden', 'true');
+});
 
   it('calls onIntersect when the sentinel enters the viewport', () => {
     const onIntersect = vi.fn();
