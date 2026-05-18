@@ -4,7 +4,7 @@ Aplicación web desarrollada con React que permite explorar canciones, buscar m�
 
 ---
 
-// test github actions //
+// test github actions CI//
 
 ## 📌 Descripción
 
