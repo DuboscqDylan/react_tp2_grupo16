@@ -4,7 +4,7 @@ Aplicación web desarrollada con React que permite explorar canciones, buscar m�
 
 ---
 
-// test github actions CI//
+// testeando github actions con .github y ci.yml correctos y mergeados en main //
 
 ## 📌 Descripción
 
@@ -86,6 +86,40 @@ La aplicación consume datos desde una API simulada (MockAPI) y cuenta con múlt
 ```bash
    npm run dev
 ```
+
+---
+
+## 🧪 Configuración de Testing
+
+
+1. Instalar dependencias :
+
+Se instalaron las librerías necesarias para testing:
+
+```bash
+npm install -D vitest jsdom @testing-library/react @testing-library/jest-dom @testing-library/user-event
+```
+
+2. Configurar vite.config.js añadiendo lo siguiente a defineConfig():
+    test: {
+    globals: true,
+    environment: "jsdom",
+    setupFiles: "./src/tests/setup.js",
+    }
+
+3. Crear archivo de setup src/tests/setup.js con esta línea de código:
+    import "@testing-library/jest-dom";
+
+4. Añadir a package.json los scripts para ejecutar los tests :
+    "scripts": {
+    "test": "vitest",
+    "test:run": "vitest run"
+    }
+
+5. Correr los tests :
+    a. Corriendo 'npm run test'
+    b. Automaticamente al hacer pull request con github actions gracias al archivo .github/workflows/ci.yml.
+
 
 ## 🌐 API utilizada
 
