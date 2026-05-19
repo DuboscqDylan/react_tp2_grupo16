@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { ErrorState } from "./ErrorState";
-import { expect } from "vitest";
+//import { expect } from "vitest";  ya esta en vite.config.js globals: true,
 
 describe("ErrorState", () => {
     it("muestra el mensaje de error recibido", () => {
