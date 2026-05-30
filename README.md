@@ -35,7 +35,6 @@ La aplicación consume datos desde una API simulada (MockAPI) y cuenta con múlt
 - Vitest
 - React Testing Library
 
-
 ---
 
 ## 📂 Estructura del proyecto
