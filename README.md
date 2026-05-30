@@ -34,7 +34,10 @@ La aplicación consume datos desde una API simulada (MockAPI) y cuenta con múlt
 - Vite
 - Vitest
 - React Testing Library
+<<<<<<< HEAD
 
+=======
+>>>>>>> 03f1611d1d710bad630b9ebcac145086ae3195a6
 
 ---
 
