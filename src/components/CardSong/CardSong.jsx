@@ -20,9 +20,7 @@ export const CardSong = ({ song, isFav, onToggle }) => {
               {song.name}
             </h3>
             <p className="text-xs text-[var(--color-text-secondary)] truncate capitalize">
-              {song.artistId
-                ? song.artistId.replaceAll("-", " ")
-                : "Unknown Artist"}
+              {song.artist?.name || "Unknown Artist"}
             </p>
             <p className="text-xs text-[var(--color-text-muted)]">
               {song.genre}

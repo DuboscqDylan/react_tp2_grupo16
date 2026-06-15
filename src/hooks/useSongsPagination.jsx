@@ -1,49 +1,42 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { API_BASE } from "../services/api.js";
-const PAGE_SIZE = 10;
+const PAGE_SIZE = 20;
 
 export function useSongsPagination() {
-  const [songs, setSongs] = useState([]);
+  const [allSongs, setAllSongs] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const [hasMore, setHasMore] = useState(true);
   const [error, setError] = useState(null);
 
-  const isFetchingRef = useRef(false);
-
-  const fetchPage = useCallback(async (pageNum) => {
-    if (isFetchingRef.current) return;
-    isFetchingRef.current = true;
-    setLoading(true);
-    setError(null);
-
-    try {
-      const url = new URL(API_BASE);
-      url.searchParams.set("page", pageNum);
-      url.searchParams.set("limit", PAGE_SIZE);
-
-      const res = await fetch(url);
-      if (!res.ok) throw new Error("Error fetching songs");
-
-      const data = await res.json();
-
-      setSongs((prev) => (pageNum === 1 ? data : [...prev, ...data]));
-      setHasMore(data.length === PAGE_SIZE);
-    } catch (err) {
-      setError(err.message || t("error"));
-    } finally {
-      setLoading(false);
-      isFetchingRef.current = false;
-    }
+  useEffect(() => {
+    fetch(`${API_BASE}/songs`)
+      .then(res => {
+        if (!res.ok) throw new Error('Failed to fetch');
+        return res.json();
+      })
+      .then(data => {
+        setAllSongs(data);
+        setLoading(false);
+        if (data.length <= PAGE_SIZE) setHasMore(false);
+      })
+      .catch(err => {
+        setError(err.message);
+        setLoading(false);
+      });
   }, []);
 
+  const songs = allSongs.slice(0, page * PAGE_SIZE);
+
   useEffect(() => {
-    fetchPage(page);
-  }, [page, fetchPage]);
+    if (allSongs.length > 0) {
+      setHasMore(page * PAGE_SIZE < allSongs.length);
+    }
+  }, [page, allSongs]);
 
   const loadMore = useCallback(() => {
     if (!loading && hasMore) {
-      setPage((prev) => prev + 1);
+      setPage(prev => prev + 1);
     }
   }, [loading, hasMore]);
 

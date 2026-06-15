@@ -60,7 +60,7 @@ export const Details = () => {
                 />
               </div>
               <p className="text-[var(--color-text-secondary)] capitalize">
-                {song.artistId?.replaceAll("-", " ") || t("unknownArtist")}
+                {song.artist?.name || t("unknownArtist")}
               </p>
             </div>
           </div>
@@ -81,7 +81,7 @@ export const Details = () => {
               <span className="text-[var(--color-text-muted)]">
                 {t("releaseDate")}:{" "}
               </span>
-              {song.releaseDate}
+              {new Date(song.releaseDate).toLocaleDateString()}
             </p>
             <p className="flex items-center gap-1">
               <span className="text-[var(--color-text-muted)]">
