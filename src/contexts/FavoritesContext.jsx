@@ -7,35 +7,57 @@ import {
   useMemo,
 } from "react";
 
+const API_BASE = import.meta.env.VITE_API_BASE || "";
+
 const FavoritesContext = createContext(null);
 
 export function FavoritesProvider({ children }) {
-  const [favoriteIds, setFavoriteIds] = useState(() => {
-    try {
-      const stored = localStorage.getItem("favoriteIds");
-      return stored ? JSON.parse(stored) : [];
-    } catch {
-      return [];
-    }
-  });
+  const [favoriteIds, setFavoriteIds] = useState([]);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    fetch(`${API_BASE}/api/favorites`)
+      .then(res => res.json())
+      .then(data => {
+        setFavoriteIds(data);
+        setIsLoaded(true);
+      })
+      .catch(err => {
+        console.error('Failed to load favorites', err);
+        setIsLoaded(true);
+      });
+  }, []);
 
   const favoriteSet = useMemo(() => new Set(favoriteIds), [favoriteIds]);
 
-  useEffect(() => {
-    localStorage.setItem("favoriteIds", JSON.stringify(favoriteIds));
-  }, [favoriteIds]);
+  const toggleFavorite = useCallback(async (id) => {
+    const isCurrentlyFavorite = favoriteSet.has(id);
+    const updatedIds = isCurrentlyFavorite
+      ? favoriteIds.filter(favId => favId !== id)
+      : [...favoriteIds, id];
+    setFavoriteIds(updatedIds);
 
-  const toggleFavorite = useCallback((id) => {
-    setFavoriteIds((prev) =>
-      prev.includes(id) ? prev.filter((favId) => favId !== id) : [...prev, id],
-    );
-  }, []);
+    try {
+      if (isCurrentlyFavorite) {
+        await fetch(`${API_BASE}/api/favorites/${id}`, { method: 'DELETE' });
+      } else {
+        await fetch(`${API_BASE}/api/favorites`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ songId: id })
+        });
+      }
+    } catch (error) {
+      console.error('Failed to toggle favorite', error);
+      setFavoriteIds(favoriteIds);  // revert on error
+    }
+  }, [favoriteIds, favoriteSet]);
 
   const isFavorite = useCallback((id) => favoriteSet.has(id), [favoriteSet]);
 
   const value = useMemo(
-    () => ({ favoriteIds, toggleFavorite, isFavorite, favoriteSet }),
-    [favoriteIds, toggleFavorite, isFavorite, favoriteSet],
+    () => ({ favoriteIds, toggleFavorite, isFavorite, favoriteSet, isLoaded }),
+    [favoriteIds, toggleFavorite, isFavorite, favoriteSet, isLoaded]
   );
 
   return (
@@ -47,7 +69,6 @@ export function FavoritesProvider({ children }) {
 
 export function useFavorites() {
   const ctx = useContext(FavoritesContext);
-  if (!ctx)
-    throw new Error("useFavorites must be used inside FavoritesProvider");
+  if (!ctx) throw new Error("useFavorites must be used inside FavoritesProvider");
   return ctx;
 }
