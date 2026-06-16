@@ -16,7 +16,7 @@ export function FavoritesProvider({ children }) {
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    fetch(`${API_BASE}/api/favorites`)
+    fetch(`${API_BASE}/favorites`)
       .then(res => res.json())
       .then(data => {
         setFavoriteIds(data);
@@ -39,9 +39,9 @@ export function FavoritesProvider({ children }) {
 
     try {
       if (isCurrentlyFavorite) {
-        await fetch(`${API_BASE}/api/favorites/${id}`, { method: 'DELETE' });
+        await fetch(`${API_BASE}/favorites/${id}`, { method: 'DELETE' });
       } else {
-        await fetch(`${API_BASE}/api/favorites`, {
+        await fetch(`${API_BASE}/favorites`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ songId: id })
