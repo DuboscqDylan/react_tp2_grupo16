@@ -34,10 +34,6 @@ La aplicación consume datos desde una API simulada (MockAPI) y cuenta con múlt
 - Vite
 - Vitest
 - React Testing Library
-<<<<<<< HEAD
-
-=======
->>>>>>> 03f1611d1d710bad630b9ebcac145086ae3195a6
 
 ---
 
@@ -59,6 +55,19 @@ La aplicación consume datos desde una API simulada (MockAPI) y cuenta con múlt
     ├── i18n.js
     └── main.jsx
 
+```
+---
+## 📞 Comunicación con Backend
+
+    La aplicación consume la API configurada mediante:
+
+```bash
+    VITE_API_BASE
+```
+Ejemplo:
+
+```bash
+    VITE_API_BASE=http://localhost:5000
 ```
 ---
 
@@ -88,9 +97,13 @@ La aplicación consume datos desde una API simulada (MockAPI) y cuenta con múlt
 ```
 
 4. Ejecutar el proyecto:
+   
 ```bash
    npm run dev
 ```
+5. La aplicación estará disponible en:
+
+    http://localhost:5173
 
 ---
 
@@ -200,6 +213,12 @@ Se utilizaron Vites y React Testing Library para validar:
     Se utilizó LocalStorage para persistir favoritos y preferencias (idioma y tema).
     Se implementó búsqueda avanzada con múltiples criterios.
     La aplicación fue diseñada con enfoque responsive y experiencia de usuario.
+---
+
+## 📷 Nuestra API
+
+<img src="public/image/image.png" width="800">
+<img src="public/image/image2.png" width="800">
 
 ---
 
