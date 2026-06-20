@@ -9,9 +9,13 @@ export const CardSong = ({ song, isFav, onToggle }) => {
         <div className="flex items-stretch gap-4 min-w-0 flex-1">
           <div className="flex-shrink-0">
             <img
-              src={song.cover}
+              src={song.cover || "/no-image.jpg"}
               alt={`${song.name} cover`}
               className="h-24 w-24 rounded-md object-cover"
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src = "/no-image.jpg";
+              }}
             />
           </div>
 
