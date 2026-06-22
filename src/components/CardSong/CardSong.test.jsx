@@ -9,7 +9,11 @@ describe("CardSong", () => {
   const mockSong = {
     id: "123",
     name: "Bohemian Rhapsody",
-    artistId: "queen",
+    artistId: 1,
+    artist: {
+      id: 1,
+      name: "Queen",
+    },
     genre: "rock",
     cover: "https://example.com/cover.jpg",
   };
@@ -60,7 +64,7 @@ describe("CardSong", () => {
   test("muestra Unknown Artist si no hay artistId", () => {
     const songWithoutArtist = {
       ...mockSong,
-      artistId: null,
+      artist: null,
     };
 
     render(
