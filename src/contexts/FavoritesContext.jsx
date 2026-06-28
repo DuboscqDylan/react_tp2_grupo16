@@ -6,71 +6,107 @@ import {
   useCallback,
   useMemo,
 } from "react";
+import { useAuth } from "./AuthContext";
 
 const API_BASE = import.meta.env.VITE_API_BASE || "";
 
 const FavoritesContext = createContext(null);
 
 export function FavoritesProvider({ children }) {
-  const [favoriteIds, setFavoriteIds] = useState([]);
+  const { token, user } = useAuth();
+
+  const [favoriteSongs, setFavoriteSongs] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
 
+  
+  const favoriteIds = useMemo(
+    () => favoriteSongs.map((song) => song.id),
+    [favoriteSongs]
+  );
+  const favoriteSet = useMemo(() => new Set(favoriteIds), [favoriteIds]);
+
+  
   useEffect(() => {
-    fetch(`${API_BASE}/favorites`)
+    if (!token || !user) {
+      setFavoriteSongs([]);
+      setIsLoaded(true);
+      return;
+    }
+
+    fetch(`${API_BASE}/favorites`, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
       .then((res) => {
-        if (!res.ok) {
-          throw new Error(`HTTP ${res.status}`);
-        }
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
         return res.json();
       })
       .then((data) => {
-        setFavoriteIds(Array.isArray(data) ? data : []);
+        if (data.success && Array.isArray(data.data)) {
+          setFavoriteSongs(data.data);
+        } else {
+          setFavoriteSongs([]);
+        }
         setIsLoaded(true);
       })
       .catch((err) => {
         console.error("Failed to load favorites", err);
-
-        setFavoriteIds([]);
+        setFavoriteSongs([]);
         setIsLoaded(true);
       });
-  }, []);
+  }, [token, user]);
 
-  const favoriteSet = useMemo(
-    () => new Set(Array.isArray(favoriteIds) ? favoriteIds : []),
-    [favoriteIds],
-  );
-
+  
   const toggleFavorite = useCallback(
-    async (id) => {
-      const isCurrentlyFavorite = favoriteSet.has(id);
-      const updatedIds = isCurrentlyFavorite
-        ? favoriteIds.filter((favId) => favId !== id)
-        : [...favoriteIds, id];
-      setFavoriteIds(updatedIds);
+    async (songId, songObject) => {
+      if (!token || !user) return;
+
+      const isCurrentlyFavorite = favoriteSet.has(songId);
+
+      
+      const updatedSongs = isCurrentlyFavorite
+        ? favoriteSongs.filter((s) => s.id !== songId)
+        : [...favoriteSongs, songObject];
+      setFavoriteSongs(updatedSongs);
 
       try {
         if (isCurrentlyFavorite) {
-          await fetch(`${API_BASE}/favorites/${id}`, { method: "DELETE" });
+          await fetch(`${API_BASE}/favorites/${songId}`, {
+            method: "DELETE",
+            headers: { Authorization: `Bearer ${token}` },
+          });
         } else {
           await fetch(`${API_BASE}/favorites`, {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ songId: id }),
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({ songId }),
           });
         }
       } catch (error) {
         console.error("Failed to toggle favorite", error);
-        setFavoriteIds(favoriteIds); // revert on error
+        
+        setFavoriteSongs(favoriteSongs);
       }
     },
-    [favoriteIds, favoriteSet],
+    [favoriteSongs, favoriteSet, token, user]
   );
 
-  const isFavorite = useCallback((id) => favoriteSet.has(id), [favoriteSet]);
+  const isFavorite = useCallback(
+    (id) => favoriteSet.has(id),
+    [favoriteSet]
+  );
 
   const value = useMemo(
-    () => ({ favoriteIds, toggleFavorite, isFavorite, favoriteSet, isLoaded }),
-    [favoriteIds, toggleFavorite, isFavorite, favoriteSet, isLoaded],
+    () => ({
+      favoriteSongs,   
+      favoriteIds,     
+      toggleFavorite,
+      isFavorite,
+      isLoaded,
+    }),
+    [favoriteSongs, favoriteIds, toggleFavorite, isFavorite, isLoaded]
   );
 
   return (
@@ -80,9 +116,4 @@ export function FavoritesProvider({ children }) {
   );
 }
 
-export function useFavorites() {
-  const ctx = useContext(FavoritesContext);
-  if (!ctx)
-    throw new Error("useFavorites must be used inside FavoritesProvider");
-  return ctx;
-}
+export const useFavorites = () => useContext(FavoritesContext);

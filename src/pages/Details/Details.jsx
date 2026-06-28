@@ -54,10 +54,7 @@ export const Details = () => {
             <div>
               <div className="flex items-center gap-3">
                 <h1 className="text-2xl font-bold leading-none">{song.name}</h1>
-                <FavoriteButton
-                  isFav={isFav}
-                  onToggle={() => toggleFavorite(song.id)}
-                />
+                <FavoriteButton isFav={isFav} onToggle={() => toggleFavorite(song.id, song)} />
               </div>
               <p className="text-[var(--color-text-secondary)] capitalize">
                 {song.artist?.name || t("unknownArtist")}
