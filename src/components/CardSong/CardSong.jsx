@@ -33,13 +33,11 @@ export const CardSong = ({ song, isFav, onToggle }) => {
         </div>
 
         <div className="flex flex-col justify-between flex-shrink-0 h-24">
-          <div className="flex-1 flex items-center justify-center relative group">
-            <FavoriteButton isFav={isFav} onToggle={() => onToggle(song.id)} />
-            <div className="absolute right-full mr-2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-              <div className="bg-[var(--color-tooltip-bg)] text-[var(--color-tooltip-text)] text-xs rounded py-1 px-2 whitespace-nowrap shadow">
-                {isFav ? "Quitar de Favoritos" : "Agregar a Favoritos"}
-              </div>
-            </div>
+          <div className="flex-1 flex items-center justify-center">
+            <FavoriteButton
+              isFav={isFav}
+              onToggle={() => onToggle(song.id, song)}
+            />
           </div>
 
           <div className="flex-1 flex items-center justify-center">

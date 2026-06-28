@@ -8,6 +8,7 @@ import { About } from "./pages/About/About";
 import { Home } from "./pages/Home/Home";
 import { FavoritesProvider } from "./contexts/FavoritesContext";
 import { Details } from "./pages/Details/Details";
+import { AuthProvider } from "./contexts/AuthContext";
 
 const router = createBrowserRouter([
   {
@@ -23,7 +24,9 @@ const router = createBrowserRouter([
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <FavoritesProvider>
-    <RouterProvider router={router} />
-  </FavoritesProvider>,
+  <AuthProvider>
+    <FavoritesProvider>
+      <RouterProvider router={router} />
+    </FavoritesProvider>,
+  </AuthProvider>  
 );

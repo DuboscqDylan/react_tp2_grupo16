@@ -1,6 +1,11 @@
 import { Heart } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 export const FavoriteButton = ({ isFav, onToggle }) => {
+  const { t } = useTranslation();
+
+  const label = isFav ? t("removeFromFavorites") : t("addToFavorites");
+
   return (
     <button
       onClick={(e) => {
@@ -9,7 +14,8 @@ export const FavoriteButton = ({ isFav, onToggle }) => {
         onToggle();
       }}
       className="transition-transform duration-200 hover:scale-110"
-      aria-label={isFav ? "Quitar de Favoritos" : "Agregar a Favoritos"}
+      aria-label={label}
+      title={label}
     >
       <Heart
         size={20}

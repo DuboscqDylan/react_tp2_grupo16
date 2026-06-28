@@ -1,50 +1,30 @@
-import { useState, useEffect } from "react";
+import { useState, useMemo } from "react";
 import { ListSongs } from "../../components/ListSongs/ListSongs";
 import { useFavorites } from "../../contexts/FavoritesContext";
+import { useAuth } from "../../contexts/AuthContext";
 import { SearchBar } from "../../components/SearchBar/SearchBar";
 import { filterSongs } from "../../services/search";
 import { useTranslation } from "react-i18next";
-import { fetchSongs } from "../../services/api";
-import { ErrorState } from "../../components/ErrorState/ErrorState";
-import { LoadingState } from "../../components/LoadingState/LoadingState";
 import { EmptyState } from "../../components/EmptyState/EmptyState";
-import { useMemo } from "react";
 
 export const Favorites = () => {
-  const [allSongs, setAllSongs] = useState([]);
+  const { favoriteSongs, toggleFavorite, isFavorite } = useFavorites();
+  const { user } = useAuth();
   const [search, setSearch] = useState("");
-  const [loading, setLoading] = useState(true);
-  const { favoriteIds, toggleFavorite, isFavorite } = useFavorites();
-  const [error, setError] = useState(null);
-
   const { t } = useTranslation();
 
-  useEffect(() => {
-    const getSongs = async () => {
-      try {
-        setError(null);
-        setLoading(true);
-        const data = await fetchSongs();
-        setAllSongs(data);
-      } catch (error) {
-        setError(error.message || t("error"));
-      } finally {
-        setLoading(false);
-      }
-    };
-    getSongs();
-  }, []);
+  const filteredFavorites = useMemo(
+    () => filterSongs(favoriteSongs, search),
+    [favoriteSongs, search]
+  );
 
-  const favoriteSongs = useMemo(() => {
-    return allSongs.filter((song) => favoriteIds.includes(song.id));
-  }, [allSongs, favoriteIds]);
-
-  const filteredFavorites = useMemo(() => {
-    return filterSongs(favoriteSongs, search);
-  }, [favoriteSongs, search]);
-
-  if (loading) return <LoadingState text={t("loading")} />;
-  if (error) return <ErrorState text={error} />;
+  if (!user) {
+    return (
+      <div className="p-6 text-center text-[var(--color-text-secondary)]">
+        {t("loginRequired")}
+      </div>
+    );
+  }
 
   return (
     <div className="p-6">
@@ -64,7 +44,7 @@ export const Favorites = () => {
         <ListSongs
           list={filteredFavorites}
           isFavorite={isFavorite}
-          onToggleFavorite={toggleFavorite}
+          onToggleFavorite={(songId, song) => toggleFavorite(songId, song)}
         />
       )}
     </div>
