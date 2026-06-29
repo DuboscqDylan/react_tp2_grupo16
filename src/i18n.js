@@ -49,6 +49,7 @@ const resources = {
       removeFromFavorites:"Quitar de Favoritos",
       back: "Volver al inicio",
       subtitle: "Lo sentimos, la página que buscas no existe o ha sido movida.",
+      downloadPdf: "Descargar PDF",
     },
   },
   en: {
@@ -99,6 +100,7 @@ const resources = {
       removeFromFavorites:"Remove from Favorites",
       back: "Back to Home",
       subtitle: "Sorry, the page you are looking for does not exist or has been moved.",
+      downloadPdf: "Download PDF",
       
     },
   },

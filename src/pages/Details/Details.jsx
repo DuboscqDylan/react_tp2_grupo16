@@ -8,12 +8,16 @@ import { useTranslation } from "react-i18next";
 import { LoadingState } from "../../components/LoadingState/LoadingState";
 import { ErrorState } from "../../components/ErrorState/ErrorState";
 import { EmptyState } from "../../components/EmptyState/EmptyState";
+import { useRef } from "react";
+import { Download } from "lucide-react";
+import { exportArtistPDF } from "../../utils/exportArtistPDF";
 
 export const Details = () => {
   const { id } = useParams();
   const [song, setSong] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const cardRef = useRef(null); 
   const { isFavorite, toggleFavorite } = useFavorites();
   const { t } = useTranslation();
 
@@ -49,13 +53,32 @@ export const Details = () => {
             className="h-64 w-64 rounded-lg object-cover"
           />
         </div>
-        <div className="flex-1 bg-[var(--color-card)] border border-[var(--color-border)] rounded-xl p-6 shadow-sm min-h-64">
+        <div
+          ref={cardRef}
+          className="relative flex-1 bg-[var(--color-card)] border border-[var(--color-border)] rounded-xl p-6 shadow-sm min-h-64"
+        >
+
+          <button
+            onClick={() => exportArtistPDF(cardRef, song.name)}
+            title={t("downloadPdf")}
+            className="absolute top-4 right-4 p-2 rounded-full text-[var(--color-text-secondary)] hover:text-white hover:bg-[var(--color-border)] transition"
+          >
+            <Download size={22} />
+          </button>
+
           <div className="flex justify-between items-center mb-4">
             <div>
               <div className="flex items-center gap-3">
-                <h1 className="text-2xl font-bold leading-none">{song.name}</h1>
-                <FavoriteButton isFav={isFav} onToggle={() => toggleFavorite(song.id, song)} />
+                <h1 className="text-2xl font-bold leading-none">
+                  {song.name}
+                </h1>
+
+                <FavoriteButton
+                  isFav={isFav}
+                  onToggle={() => toggleFavorite(song.id, song)}
+                />
               </div>
+
               <p className="text-[var(--color-text-secondary)] capitalize">
                 {song.artist?.name || t("unknownArtist")}
               </p>
