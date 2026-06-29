@@ -9,16 +9,19 @@ import { Home } from "./pages/Home/Home";
 import { FavoritesProvider } from "./contexts/FavoritesContext";
 import { Details } from "./pages/Details/Details";
 import { AuthProvider } from "./contexts/AuthContext";
+import { NotFound } from "./pages/NotFound/NotFound";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+    errorElement: <NotFound />,
     children: [
       { index: true, element: <Home /> },
       { path: "Favorites", element: <Favorites /> },
       { path: "About", element: <About /> },
       { path: "songs/:id", element: <Details /> },
+      { path: "*", element: <NotFound /> },
     ],
   },
 ]);
