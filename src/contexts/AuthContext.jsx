@@ -1,4 +1,5 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useState, useEffect, useMemo } from "react";
+import { createAuthFetch } from "../services/authFetch";
 
 const API_BASE = import.meta.env.VITE_API_BASE || "";
 
@@ -7,35 +8,10 @@ const AuthContext = createContext(null);
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(localStorage.getItem("token") || null);
+  const [refreshToken, setRefreshToken] = useState(
+    localStorage.getItem("refreshToken") || null,
+  );
   const [loading, setLoading] = useState(true);
-
-  
-  useEffect(() => {
-    if (!token) {
-      setLoading(false);
-      return;
-    }
-
-    fetch(`${API_BASE}/auth/me`, {
-      headers: { Authorization: `Bearer ${token}` },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.success) {
-          setUser(data.data);
-        } else {
-          localStorage.removeItem("token");
-          setToken(null);
-          setUser(null);
-        }
-      })
-      .catch(() => {
-        localStorage.removeItem("token");
-        setToken(null);
-        setUser(null);
-      })
-      .finally(() => setLoading(false));
-  }, [token]);
 
   const login = async (email, password) => {
     const res = await fetch(`${API_BASE}/auth/login`, {
@@ -47,7 +23,10 @@ export function AuthProvider({ children }) {
 
     if (data.success) {
       localStorage.setItem("token", data.data.accessToken);
+      localStorage.setItem("refreshToken", data.data.refreshToken);
+
       setToken(data.data.accessToken);
+      setRefreshToken(data.data.refreshToken);
       setUser(data.data.user);
     }
     return data;
@@ -69,13 +48,63 @@ export function AuthProvider({ children }) {
 
   const logout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("refreshToken");
+
     setToken(null);
+    setRefreshToken(null);
     setUser(null);
+    setLoading(false);
   };
+
+  const authenticatedFetch = useMemo(
+    () =>
+      createAuthFetch({
+        getToken: () => token,
+        getRefreshToken: () => refreshToken,
+        setToken,
+        logout,
+      }),
+    [token, refreshToken],
+  );
+
+  useEffect(() => {
+    async function loadUser() {
+      if (!token) {
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const res = await authenticatedFetch(`${API_BASE}/auth/me`);
+
+        const data = await res.json();
+
+        if (!data.success) {
+          logout();
+        } else {
+          setUser(data.data);
+        }
+      } catch {
+        logout();
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadUser();
+  }, [token, authenticatedFetch]);
 
   return (
     <AuthContext.Provider
-      value={{ user, token, login, register, logout, loading }}
+      value={{
+        user,
+        token,
+        login,
+        register,
+        logout,
+        loading,
+        authFetch: authenticatedFetch,
+      }}
     >
       {children}
     </AuthContext.Provider>
