@@ -13,100 +13,109 @@ const API_BASE = import.meta.env.VITE_API_BASE || "";
 const FavoritesContext = createContext(null);
 
 export function FavoritesProvider({ children }) {
-  const { token, user } = useAuth();
+  const { token, user, authFetch } = useAuth();
 
   const [favoriteSongs, setFavoriteSongs] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
 
-  
   const favoriteIds = useMemo(
     () => favoriteSongs.map((song) => song.id),
-    [favoriteSongs]
+    [favoriteSongs],
   );
   const favoriteSet = useMemo(() => new Set(favoriteIds), [favoriteIds]);
 
-  
   useEffect(() => {
-    if (!token || !user) {
-      setFavoriteSongs([]);
-      setIsLoaded(true);
-      return;
-    }
+    async function loadFavorites() {
+      if (!token || !user) {
+        setFavoriteSongs([]);
+        setIsLoaded(true);
+        return;
+      }
 
-    fetch(`${API_BASE}/favorites`, {
-      headers: { Authorization: `Bearer ${token}` },
-    })
-      .then((res) => {
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        return res.json();
-      })
-      .then((data) => {
+      try {
+        const res = await authFetch(`${API_BASE}/favorites`);
+
+        if (!res.ok) {
+          throw new Error(`HTTP ${res.status}`);
+        }
+
+        const data = await res.json();
+
         if (data.success && Array.isArray(data.data)) {
           setFavoriteSongs(data.data);
         } else {
           setFavoriteSongs([]);
         }
-        setIsLoaded(true);
-      })
-      .catch((err) => {
+      } catch (err) {
         console.error("Failed to load favorites", err);
         setFavoriteSongs([]);
+      } finally {
         setIsLoaded(true);
-      });
-  }, [token, user]);
+      }
+    }
 
-  
+    loadFavorites();
+  }, [token, user, authFetch]);
+
   const toggleFavorite = useCallback(
     async (songId, songObject) => {
       if (!token || !user) return;
 
       const isCurrentlyFavorite = favoriteSet.has(songId);
 
-      
+      const previousSongs = favoriteSongs;
+
       const updatedSongs = isCurrentlyFavorite
         ? favoriteSongs.filter((s) => s.id !== songId)
         : [...favoriteSongs, songObject];
+
       setFavoriteSongs(updatedSongs);
 
       try {
         if (isCurrentlyFavorite) {
-          await fetch(`${API_BASE}/favorites/${songId}`, {
+          const res = await authFetch(`${API_BASE}/favorites/${songId}`, {
             method: "DELETE",
-            headers: { Authorization: `Bearer ${token}` },
           });
+
+          if (!res.ok) {
+            throw new Error(`HTTP ${res.status}`);
+          }
         } else {
-          await fetch(`${API_BASE}/favorites`, {
+          const res = await authFetch(`${API_BASE}/favorites`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
             },
-            body: JSON.stringify({ songId }),
+            body: JSON.stringify({
+              songId,
+            }),
           });
+
+          if (!res.ok) {
+            throw new Error(`HTTP ${res.status}`);
+          }
         }
       } catch (error) {
         console.error("Failed to toggle favorite", error);
-        
-        setFavoriteSongs(favoriteSongs);
+
+        // rollback
+        setFavoriteSongs(previousSongs);
       }
     },
-    [favoriteSongs, favoriteSet, token, user]
+    [favoriteSongs, favoriteSet, token, user, authFetch],
   );
 
-  const isFavorite = useCallback(
-    (id) => favoriteSet.has(id),
-    [favoriteSet]
-  );
+  const isFavorite = useCallback((id) => favoriteSet.has(id), [favoriteSet]);
 
   const value = useMemo(
     () => ({
-      favoriteSongs,   
-      favoriteIds,     
+      favoriteSongs,
+      favoriteIds,
       toggleFavorite,
       isFavorite,
       isLoaded,
     }),
-    [favoriteSongs, favoriteIds, toggleFavorite, isFavorite, isLoaded]
+    [favoriteSongs, favoriteIds, toggleFavorite, isFavorite, isLoaded],
   );
 
   return (
