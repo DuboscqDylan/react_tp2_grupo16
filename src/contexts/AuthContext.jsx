@@ -26,11 +26,13 @@ export function AuthProvider({ children }) {
         } else {
           localStorage.removeItem("token");
           setToken(null);
+          setUser(null);
         }
       })
       .catch(() => {
         localStorage.removeItem("token");
         setToken(null);
+        setUser(null);
       })
       .finally(() => setLoading(false));
   }, [token]);
@@ -44,9 +46,9 @@ export function AuthProvider({ children }) {
     const data = await res.json();
 
     if (data.success) {
-      localStorage.setItem("token", data.token);
-      setToken(data.token);
-      setUser(data.data);
+      localStorage.setItem("token", data.data.accessToken);
+      setToken(data.data.accessToken);
+      setUser(data.data.user);
     }
     return data;
   };
