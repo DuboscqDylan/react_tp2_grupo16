@@ -24,6 +24,18 @@ La aplicación consume datos desde una API simulada (MockAPI) y cuenta con múlt
 
 ---
 
+## 🆕 Funcionalidades nuevas (Frontend)
+
+- 🧑‍💻 Implementación de Context/AuthProvider para autenticación global
+- 🔐 Protección de rutas privadas (usuarios no autenticados)
+- ❤️ Integración de favoritos con backend
+- 📋 Página de registro de usuarios
+- 🚪 Logout funcional
+- ⭐ Visualización de favoritos del usuario
+- ⚠️ Página Not Found (404) para rutas inexistentes
+
+---
+
 ## 🛠️ Tecnologías utilizadas
 
 - React
@@ -34,6 +46,18 @@ La aplicación consume datos desde una API simulada (MockAPI) y cuenta con múlt
 - Vite
 - Vitest
 - React Testing Library
+- html2canvas + jsPDF (exportación PDF)
+
+---
+
+## 📄 Exportación PDF
+
+La aplicación permite exportar contenido visual (cards/artistas) a PDF utilizando:
+
+    html2canvas para capturar el componente
+    jsPDF para generar y descargar el archivo
+
+📥 El PDF se descarga automáticamente en la carpeta Descargas del navegador con el nombre del artista o elemento seleccionado.
 
 ---
 
@@ -51,6 +75,8 @@ La aplicación consume datos desde una API simulada (MockAPI) y cuenta con múlt
     ├── hooks/
     ├── pages/
     ├── services/
+    ├── tests/
+    ├── utils/
     ├── App.jsx
     ├── i18n.js
     └── main.jsx
@@ -94,6 +120,8 @@ Ejemplo:
     npm install lucide-react
 #multi-idioma
     npm install i18next react-i18next
+#descargarPDF
+    npm install jspdf html2canvas 
 ```
 
 4. Ejecutar el proyecto:
@@ -217,8 +245,7 @@ Se utilizaron Vites y React Testing Library para validar:
 
 ## 📷 Nuestra API
 
-<img src="public/image/image.png" width="800">
-<img src="public/image/image2.png" width="800">
+<img src="public/image/Spoofify.png" width="800">
 
 ---
 
@@ -231,12 +258,12 @@ Se utilizaron Vites y React Testing Library para validar:
 
 ## 📎 Repositorio
 
-    👉 https://github.com/DuboscqDylan/react_tp2_grupo16
+     https://github.com/DuboscqDylan/react_tp2_grupo16
 
 ## 📎 Linear
 
-    👉 https://linear.app/pwa-cerda-duboscq/project/tp2-react-2e7cc94acbec/overview
+     https://linear.app/pwa-cerda-duboscq/project/tp2-react-2e7cc94acbec/overview
 
 ## 📎 Vercel
 
-    👉 https://react-tp2-grupo16.vercel.app/
+     https://react-tp2-grupo16.vercel.app/
